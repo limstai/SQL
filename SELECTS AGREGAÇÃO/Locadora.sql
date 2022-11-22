@@ -34,9 +34,9 @@ VALUES (1002, 'Birdman', 2015)
 INSERT INTO filme (id, titulo, ano)
 VALUES (1003, 'Interestelar', 2014)
 INSERT INTO filme (id, titulo, ano)
-VALUES (1004, 'A culpa é das estrelas', 2014)
+VALUES (1004, 'A culpa Ã© das estrelas', 2014)
 INSERT INTO filme (id, titulo, ano)
-VALUES (1005, 'Alexandre e o dia terrível, horrível, espantoso e horroroso', 2014)
+VALUES (1005, 'Alexandre e o dia terrÃ­vel, horrÃ­vel, espantoso e horroroso', 2014)
 INSERT INTO filme (id, titulo, ano)
 VALUES (1006, 'Sing', 2016)
 GO
@@ -120,11 +120,11 @@ VALUES
 GO
 INSERT INTO cliente
 VALUES
-(5501, 'Matilde Luz', 'Rua Síria', 150, '03086040'),
+(5501, 'Matilde Luz', 'Rua SÃ­ria', 150, '03086040'),
 (5502, 'Carlos Carreiro', 'Rua Bastolomeu Aires', 1250, '04419110'),
 (5503, 'Daniel Ramalho', 'Rua Itajutiba', 169, NULL),
 (5504, 'Roberta Bento', 'Rua Jayme Von Rosenburg', 36, NULL),
-(5505, 'Rosa Cerqueira', 'Rua Arnaldo Simmões Pinto', 235, '02917110')
+(5505, 'Rosa Cerqueira', 'Rua Arnaldo SimmÃµes Pinto', 235, '02917110')
 GO
 INSERT INTO locacao
 VALUES
@@ -171,8 +171,8 @@ WHERE id = 9903
 
 DELETE filme
 WHERE titulo = 'Sing'
-/*consultar num_cadastro do cliente, nome do cliente, titulo do filme, fabricação do dvd
-valor da locação, dos dvds que tem a maior data de fabricação dentre todos os cadastrados.*/
+/*consultar num_cadastro do cliente, nome do cliente, titulo do filme, fabricaÃ§Ã£o do dvd
+valor da locaÃ§Ã£o, dos dvds que tem a maior data de fabricaÃ§Ã£o dentre todos os cadastrados.*/
 SELECT cl.num_cadastro, cl.nome, fl.titulo, dvd.data_fabricacao, loca.valor
 FROM cliente cl, filme fl, dvd, locacao loca
 WHERE cl.num_cadastro = loca.clientenum_cadastro
@@ -182,9 +182,9 @@ WHERE cl.num_cadastro = loca.clientenum_cadastro
 			SELECT max(dvd.data_fabricacao)
 			FROM dvd
 )
-/*2. consultar, num_cadastro do cliente, nome do cliente, data de locação formato dd/mm/aaaa e a quantidade
-de DVDS alugados por cliente(chamar essa de coluna de qtd) e por data de locação*/
-SELECT cl.num_cadastro, cl.nome, CONVERT(char(10), data_locacao, 103) as Data_Locação,
+/*2. consultar, num_cadastro do cliente, nome do cliente, data de locaÃ§Ã£o formato dd/mm/aaaa e a quantidade
+de DVDS alugados por cliente(chamar essa de coluna de qtd) e por data de locaÃ§Ã£o*/
+SELECT cl.num_cadastro, cl.nome, CONVERT(char(10), data_locacao, 103) as Data_LocaÃ§Ã£o,
 	COUNT(loca.dvdnum) as qtd
 FROM cliente cl, locacao loca, dvd
 WHERE cl.num_cadastro = loca.clientenum_cadastro
@@ -193,7 +193,7 @@ WHERE cl.num_cadastro = loca.clientenum_cadastro
 	ORDER BY cl.num_cadastro ASC
 
 --3)--
-SELECT  cl.num_cadastro, cl.nome, CONVERT(char(10), data_locacao, 103) as Data_Locação, 
+SELECT  cl.num_cadastro, cl.nome, CONVERT(char(10), data_locacao, 103) as Data_LocaÃ§Ã£o, 
 		SUM(lc.valor) as Valor_Total
 FROM cliente cl, locacao lc, dvd
 WHERE cl.num_cadastro = lc.clientenum_cadastro
@@ -202,12 +202,12 @@ WHERE cl.num_cadastro = lc.clientenum_cadastro
 		ORDER BY cl.num_cadastro ASC
 
 --4)--
-SELECT cl.num_cadastro, cl.nome, cl.logradouro +'-'+CAST(cl.num AS VARCHAR(4)) AS Endereço,
-		CONVERT(char(10), data_locacao, 103) AS Data_Locação
-FROM cliente cl, locacao lc, dvd
+SELECT cl.num_cadastro, cl.nome, cl.logradouro +'-'+CAST(cl.num AS VARCHAR(4)) AS EndereÃ§o,
+		CONVERT(char(10), data_locacao, 103) AS Data_LocaÃ§Ã£o
+FROM cliente cl, locacao lc
 WHERE cl.num_cadastro = lc.clientenum_cadastro
-	and dvd.num = lc.dvdnum
 	GROUP BY cl.num_cadastro, cl.nome, cl.logradouro, cl.num, lc.data_locacao
+        HAVING COUNT(lc.dvdnum) > 2
 
 
 
